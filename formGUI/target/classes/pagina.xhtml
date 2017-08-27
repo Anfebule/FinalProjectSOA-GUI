@@ -1,76 +1,100 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
+ <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
+	
+	<h:head>
+        <title>Enviar datos para solicitud de credito</title>
+    </h:head>
+	
 	<h:body>
-		<h:form>            		 
-		    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+		<h:form>            	
+<!-- 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />	  -->
 		 
-		    <p:dialog header="Enviar datos para solicitud de credito" widgetVar="dlg" resizable="false">
-		        <h:panelGrid columns="2" cellpadding="5">
+			<p:panel id="basic" header="Enviar datos para solicitud de credito">
+		        <h:panelGrid id="grid" columns="3" cellpadding="5">
 		            
-		            <h:outputLabel for="Tipo de identificación" value="Tipo de identificación:"/>
-					<p:inputText id="tipoIdentificacion" value="#{FormController.tipoIdentificacion}" required="true" label="tipoIdentificacion"/>
+		            <h:outputLabel for="tipoIdentificacion" value="Tipo de identificación:"/>
+					<p:inputText id="tipoIdentificacion" value="#{formController.tipoIdentificacion}" label="tipoIdentificacion" required="true"/>
+					<p:message for="tipoIdentificacion" />
 					
-					<h:outputLabel for="Número de identificación" value="Número de identificación:"/>
-					<p:inputText id="numeroIdentificacion" value="#{FormController.numeroIdentificacion}" required="true" label="numeroIdentificacion"/>
+					<h:outputLabel for="numeroIdentificacion" value="Número de identificación:"/>
+					<p:inputText id="numeroIdentificacion" value="#{formController.numeroIdentificacion}" label="numeroIdentificacion" required="true"/>
+					<p:message for="numeroIdentificacion" />
 					
-					<h:outputLabel for="Nombres" value="Nombres:"/>
-					<p:inputText id="nombres" value="#{FormController.nombres}" required="true" label=""/>
+					<h:outputLabel for="nombres" value="Nombres:"/>
+					<p:inputText id="nombres" value="#{formController.nombres}" label="nombres" required="true"/>
+					<p:message for="nombres" />
 					
-					<h:outputLabel for="Apellidos" value="Apellidos:"/>
-					<p:inputText id="apellidos" value="#{FormController.apellidos}" required="true" label="apellidos"/>
+					<h:outputLabel for="apellidos" value="Apellidos:"/>
+					<p:inputText id="apellidos" value="#{formController.apellidos}" label="apellidos" required="true"/>
+					<p:message for="apellidos" />
 					
-					<h:outputLabel for="Cantidad solicitada" value="Cantidad solicitada:"/>
-					<p:inputText id="cantidadSolicitada" value="#{FormController.cantidadSolicitada}" required="true" label="cantidadSolicitada"/>
+					<h:outputLabel for="cantidadSolicitada" value="Cantidad solicitada:"/>
+					<p:inputText id="cantidadSolicitada" value="#{formController.cantidadSolicitada}" label="cantidadSolicitada" required="true"/>
+					<p:message for="cantidadSolicitada" />
 					
-					<h:outputLabel for="Tipo de moneda" value="Tipo de moneda:"/>
-					<p:inputText id="tipoMoneda" value="#{FormController.tipoMoneda}" required="true" label="tipoMoneda"/>
+					<h:outputLabel for="tipoMoneda" value="Tipo de moneda:"/>
+					<p:inputText id="tipoMoneda" value="#{formController.tipoMoneda}" label="tipoMoneda" required="true"/>
+					<p:message for="tipoMoneda" />
 					
-					<h:outputLabel for="Plazo en meses" value="Plazo en meses:"/>
-					<p:inputText id="plazoMeses" value="#{FormController.plazoMeses}" required="true" label="plazoMeses"/>
+					<h:outputLabel for="plazoMeses" value="Plazo en meses:"/>
+					<p:inputText id="plazoMeses" value="#{formController.plazoMeses}" label="plazoMeses" required="true"/>
+					<p:message for="plazoMeses" />
 					
 					<!-- Referencia comercial -->
-					<h:outputLabel for="Referencia comercial" value="Referencia comercial:" />
+					<p:outputLabel id="referenciaComercial" value="Referencia comercial:"/>
+					<p:outputLabel for="referenciaComercial" value=""/>
 					
-					<h:outputLabel for="NIT" value="NIT:"/>
-					<p:inputText id="refNITEmpresa" value="#{FormController.refNITEmpresa}" required="true" label="refNITEmpresa"/>
+					<h:outputLabel for="refNITEmpresa" value="NIT:"/>
+					<p:inputText id="refNITEmpresa" value="#{formController.refNITEmpresa}" label="refNITEmpresa" required="true"/>
+					<p:message for="refNITEmpresa" />
 					
-					<h:outputLabel for="Nombre empresa" value="Nombre empresa:"/>
-					<p:inputText id="refNombreEmpresa" value="#{FormController.refNombreEmpresa}" required="true" label="refNombreEmpresa"/>
+					<h:outputLabel for="refNombreEmpresa" value="Nombre empresa:"/>
+					<p:inputText id="refNombreEmpresa" value="#{formController.refNombreEmpresa}" label="refNombreEmpresa" required="true"/>
+					<p:message for="refNombreEmpresa" />
 					
-					<h:outputLabel for="Dirección" value="Dirección:"/>
-					<p:inputText id="refDireccionEmpresa" value="#{FormController.refDireccionEmpresa}" required="true" label="refDireccionEmpresa"/>
+					<h:outputLabel for="refDireccionEmpresa" value="Dirección:"/>
+					<p:inputText id="refDireccionEmpresa" value="#{formController.refDireccionEmpresa}" label="refDireccionEmpresa" required="true"/>
+					<p:message for="refDireccionEmpresa" />
 					
 					<!-- Referencia personal -->
-					<h:outputLabel for="Referencia personal" value="Referencia personal:"/>
+					<h:outputLabel id="referenciaPersonal" value="Referencia personal:" />
+					<p:outputLabel for="referenciaPersonal" value=""/>
 					
-					<h:outputLabel for="Nombre completo" value="Nombre completo:"/>
-					<p:inputText id="refNombreContacto" value="#{FormController.refNombreContacto}" required="true" label="refNombreContacto"/>
+					<h:outputLabel for="refNombreContacto" value="Nombre completo:"/>
+					<p:inputText id="refNombreContacto" value="#{formController.refNombreContacto}" label="refNombreContacto" required="true"/>
+					<p:message for="refNombreContacto" />
 					
-					<h:outputLabel for="Identificación" value="Identificación:"/>
-					<p:inputText id="refContIdentificacionContacto" value="#FormController.refContIdentificacionContacto" required="true" label="refContIdentificacionContacto"/>
+					<h:outputLabel for="refContIdentificacionContacto" value="Identificación:"/>
+					<p:inputText id="refContIdentificacionContacto" value="#{formController.refContIdentificacionContacto}" label="refContIdentificacionContacto" required="true"/>
+					<p:message for="refContIdentificacionContacto" />
 					
-					<h:outputLabel for="Teléfono contacto" value="Teléfono contacto:"/>
-					<p:inputText id="refContTelefonoContacto" value="#{FrmController.refContTelefonoContacto}" required="true" label="refContTelefonoContacto"/>
+					<h:outputLabel for="refContTelefonoContacto" value="Teléfono contacto:"/>
+					<p:inputText id="refContTelefonoContacto" value="#{formController.refContTelefonoContacto}" label="refContTelefonoContacto" required="true"/>
+					<p:message for="refContTelefonoContacto" />
 					
 					<!-- Referencia familiar -->
-					<h:outputLabel for="Referencia familiar" value="Referencia familiar:"/>
-					<h:outputLabel for="Identificación" value="Identificación:"/>
-					<p:inputText id="refIdentificacionFamiliar" value="#{FormController.refIdentificacionFamiliar}" required="true" label="refIdentificacionFamiliar"/>
+					<h:outputLabel id="referenciaFamiliar" value="Referencia familiar:" />
+					<p:outputLabel for="referenciaFamiliar" value=""/>
 					
-					<h:outputLabel for="Nombre" value="Nombre:"/>
-					<p:inputText id="refNombreFamiliar" value="#{FormController.refNombreFamiliar}" required="true" label="refNombreFamiliar"/>
+					<h:outputLabel for="refIdentificacionFamiliar" value="Identificación:"/>
+					<p:inputText id="refIdentificacionFamiliar" value="#{formController.refIdentificacionFamiliar}" label="refIdentificacionFamiliar" required="true"/>
+					<p:message for="refIdentificacionFamiliar" />
 					
-					<h:outputLabel for="Parentesco" value="Parentesco:"/>
-					<p:inputText id="refParentescoFamiliar" value="#{FormController.refParentescoFamiliar}" required="true" label="refParentescoFamiliar"/>
-		 
-		            <f:facet name="footer">
-		                <p:commandButton value="Enviar" update="growl" actionListener="#{FormController.sendInfo}"/>
-		            </f:facet>  
+					<h:outputLabel for="refNombreFamiliar" value="Nombre:"/>
+					<p:inputText id="refNombreFamiliar" value="#{formController.refNombreFamiliar}" label="refNombreFamiliar" required="true"/>
+					<p:message for="refNombreFamiliar" />
+					
+					<h:outputLabel for="refParentescoFamiliar" value="Parentesco:"/>
+					<p:inputText id="refParentescoFamiliar" value="#{formController.refParentescoFamiliar}" label="refParentescoFamiliar" required="true"/>
+					<p:message for="refParentescoFamiliar" />
+		 			
 		        </h:panelGrid>
-		    </p:dialog>
+		  
+			</p:panel>
+			
+			<p:commandButton value="Enviar" actionListener="#{formController.sendInfo}"/>
 		</h:form>
 	</h:body>
 </html>

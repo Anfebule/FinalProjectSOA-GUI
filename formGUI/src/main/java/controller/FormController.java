@@ -10,9 +10,10 @@ import java.net.URL;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
-@ManagedBean
+import org.primefaces.context.RequestContext;
+
+@ManagedBean(name = "formController")
 @ViewScoped
 public class FormController {
 	
@@ -149,6 +150,10 @@ public class FormController {
 	}
 	
 	public void sendInfo(){
+		
+		FacesMessage message = null;
+		String recievedMessage = "";
+		
 		if(!tipoIdentificacion.isEmpty() &&
 			!numeroIdentificacion.isEmpty() &&
 			!nombres.isEmpty() &&
@@ -166,12 +171,9 @@ public class FormController {
 			!refNombreFamiliar.isEmpty() &&
 			!refParentescoFamiliar.isEmpty()){
 			
-			FacesMessage message = null;
-			String recievedMessage = null;
-			
 			try {
 
-				URL url = new URL("http://localhost:8080/RESTfulExample/json/product/get");
+				URL url = new URL("http://localhost:8081/initialRequest");
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 				conn.setRequestMethod("GET");
 				conn.setRequestProperty("Accept", "application/json");
@@ -186,25 +188,28 @@ public class FormController {
 
 				String output;
 				while ((output = br.readLine()) != null) {
-					recievedMessage = output;
+					recievedMessage += output;
 					System.out.println(output);
 				}
 
 				conn.disconnect();
+				message = new FacesMessage(FacesMessage.SEVERITY_INFO, recievedMessage, toString());
+				RequestContext.getCurrentInstance().showMessageInDialog(message);
 
 			  } catch (MalformedURLException e) {
 				  message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al enviar", e.toString());
-				  FacesContext.getCurrentInstance().addMessage(null, message);
+				  RequestContext.getCurrentInstance().showMessageInDialog(message);
 				  e.printStackTrace();
 				  
 			  } catch (IOException e) {
 				  message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al enviar", e.toString());
-				  FacesContext.getCurrentInstance().addMessage(null, message);
+				  RequestContext.getCurrentInstance().showMessageInDialog(message);
 				  e.printStackTrace();
 			  }
 			
-			message = new FacesMessage(FacesMessage.SEVERITY_INFO, recievedMessage, toString());
-	        FacesContext.getCurrentInstance().addMessage(null, message);
+		} else {
+			message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al enviar", "Hay campos vacíos");
+			RequestContext.getCurrentInstance().showMessageInDialog(message);
 		}
 	}
 }

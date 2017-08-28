@@ -1,104 +1,159 @@
-# FinalProjectSOA-GUI
-GUI hecha en Java y JSF Prime Faces
+<h1 id="finalprojectsoa-gui">FinalProjectSOA-GUI</h1>
 
-Enunciado del proyecto
-===================
-Una reconocida empresa del sector financiero, requiere dentro de su operación, agilizar sus procesos de cotización de productos para clientes finales.
-
-El objeto social de esta empresa, es la de servir como intermediario financiero, en la consecución de la mejor alternativa para clientes finales que requieren de un préstamo bancario.
-
-Actualmente, se tiene convenio con los siguientes Bancos:
-- Banco de América
-- Broken Bank
-- Latin Trump’s Bank
-- Banco Chibcha
-- Banco del pueblo
-
-El siguiente, es el proceso que se ha levantado para la integración:
-
-El cliente final, llena un formulario de solicitud de crédito con la siguiente información:
-
-1. Tipo de identificación
-2. Número de identificación
-3. Nombres
-4. Apellidos
-5. Cantidad solicitada
-6. Tipo de moneda
-7. Plazo en meses
-8. Referencias comerciales
-8.1. NIT
-8.2. Nombre empresa
-8.3. Dirección
-9. Contacto
-9.1. Nombre completo
-9.2. Identificación
-9.3. Teléfono contacto
-10. Referencias familiares
-10.1. Identificación
-10.2. Nombre
-10.3. Parentesco
-
-Con la solicitud diligenciada, se realiza una consulta sobre el “Perfil del cliente”.  Esta consulta, se realiza a la central de Riesgos “ConsultaElRiesgoDeTuCliente.com”.   Se trata de una empresa, que ofrece un servicio de consulta en línea del riesgo en el clasifica a una persona según su historial.
-Para utilizar este servicio, la empresa ha pagado una suscripción anual, por medio de la cual, se le permite ejecutar consultas en línea por medio de una invocación a través de una API REST.  El siguiente, es el contrato de integración ofrecido por la empresa:
-
-| Contrato de Integración No: | 001 
-| ----------------------------------
-| Tipo de Integración: | REST
-| Patrón de Intercambio: | Síncrono
-| Formato de Entrada | JSON
-| Formato de Respuesta: | JSON
-| Endpoint URI: | http://192.168.0.100:8080/creditAgencyService/creditProfile
-| Método de solicitud | POST
-| Parametros de entrada | {
-||&nbsp;&nbsp;&nbsp;&nbsp; "Cliente" : {
-||&nbsp;&nbsp;&nbsp;&nbsp; "tipoIdentificacion" : "[DATO]",
-||&nbsp;&nbsp;&nbsp;&nbsp; "numeroDeIdentificacion" : "[DATO]",
-||&nbsp;&nbsp;&nbsp;&nbsp; "nombres" : "[DATO]",
-||&nbsp;&nbsp;&nbsp;&nbsp; "apellidos" : "[DATO]"
-||&nbsp;&nbsp;&nbsp;&nbsp;}
-|| }
-|Parámetros de salida | {
-||&nbsp;&nbsp;&nbsp;&nbsp; "CreditProfile" : {
-||&nbsp;&nbsp;&nbsp;&nbsp; "CreditHistoryLegth" : "[DATO. AÑOS DE HISTORIA CREDITICIA DEL CLIENTE]",
-||&nbsp;&nbsp;&nbsp;&nbsp; "CreditScore" : "[DATO - PUNTAJE ASIGNADO AL CLIENTE - RANGO ENTRE 0 Y 600 PUNTOS]"
-||&nbsp;&nbsp;&nbsp;&nbsp;}
-||}
-
-Cuando se tenga el perfil crediticio del cliente, se procede a consultar cuál de los bancos con los que se tiene convenio, es elegible para ofrecer.. Se tiene en cuenta las siguientes reglas:
-
-1. Banco de América y Broken Bank solo realizan préstamos, si el monto supera los $20’000.000. 
-
-2. Latin Trump’s Bank y Banco Chibcha solo realizan préstamos, si el monto iguala o supera los $10.000.00 y NO iguala NI supera los $20.000.000
-
-3. Banco del pueblo solo realiza préstamos por menos de $10.000.000
+<p>GUI hecha en Java y JSF Prime Faces</p>
 
 
-Una vez se tengan los posibles bancos que puedan prestar el dinero, se realiza una invocación a sus propios puntos de integración expuestos.  Cada banco, expone un punto de integración con protocolos y/o formatos distintos.  Sin embargo, cada banco recibe como entrada el perfil crediticio y la información básica del cliente.  [Es decisión de ustedes, la elección del tipo de tecnología con la que expondrán y consumirán cada uno de los servicios que ofrece cada uno de los bancos. Ejemplo: Banco de América y Broken Bank exponen sus servicio por medio de Rest Services, Latin Trump’s Bank por medio de Archivos XML en un servidor FTP y Banco del Pueblo, por medio de su sitio Web con una petición POST].
 
-La respuesta de cada banco, es la tasa de interés y el tipo de tasa al que presta el dinero.
+<h1 id="enunciado-del-proyecto">Enunciado del proyecto</h1>
 
-Se toma la tasa de interés más baja y se le envía una notificación al usuario vía correo electrónico, informando el banco que le puede servir para su préstamo.
+<p>Una reconocida empresa del sector financiero, requiere dentro de su operación, agilizar sus procesos de cotización de productos para clientes finales.</p>
 
-El flujo general del proceso es:
+<p>El objeto social de esta empresa, es la de servir como intermediario financiero, en la consecución de la mejor alternativa para clientes finales que requieren de un préstamo bancario.</p>
 
-```sequence
-Client->GUI:access
-GUI->IntegrationESB: request info
-IntegrationESB-->GUI: request accepted
-IntegrationESB->RiskProfile: request profile
-RiskProfile-->IntegrationESB: return profile
-IntegrationESB->BancoAmerica: send profile
-BancoAmerica-->IntegrationESB: return interest and type
-IntegrationESB->BrokenBank: send profile
-BrokenBank-->IntegrationESB: return interest and type
-IntegrationESB->LatinBank: send profile
-LatinBank-->IntegrationESB: return interest and type
-IntegrationESB->BancoChibcha: send profile
-BancoChibcha-->IntegrationESB: return interest and type
-IntegrationESB->BancoPueblo: send profile
-BancoPueblo-->IntegrationESB: return interest and type
-Note right of IntegrationESB: Process best choice
-IntegrationESB->Client: send mail
-```
+<p>Actualmente, se tiene convenio con los siguientes Bancos: <br>
+- Banco de América <br>
+- Broken Bank <br>
+- Latin Trump’s Bank <br>
+- Banco Chibcha <br>
+- Banco del pueblo</p>
 
-Este proyecto es el correspondiente a la GUI
+<p>El siguiente, es el proceso que se ha levantado para la integración:</p>
+
+<p>El cliente final, llena un formulario de solicitud de crédito con la siguiente información:</p>
+
+<ol>
+<li>Tipo de identificación</li>
+<li>Número de identificación</li>
+<li>Nombres</li>
+<li>Apellidos</li>
+<li>Cantidad solicitada</li>
+<li>Tipo de moneda</li>
+<li>Plazo en meses</li>
+<li>Referencias comerciales <br>
+8.1. NIT <br>
+8.2. Nombre empresa <br>
+8.3. Dirección</li>
+<li>Contacto <br>
+9.1. Nombre completo <br>
+9.2. Identificación <br>
+9.3. Teléfono contacto</li>
+<li>Referencias familiares <br>
+10.1. Identificación <br>
+10.2. Nombre <br>
+10.3. Parentesco</li>
+</ol>
+
+<p>Con la solicitud diligenciada, se realiza una consulta sobre el “Perfil del cliente”.  Esta consulta, se realiza a la central de Riesgos “ConsultaElRiesgoDeTuCliente.com”.   Se trata de una empresa, que ofrece un servicio de consulta en línea del riesgo en el clasifica a una persona según su historial. <br>
+Para utilizar este servicio, la empresa ha pagado una suscripción anual, por medio de la cual, se le permite ejecutar consultas en línea por medio de una invocación a través de una API REST.  El siguiente, es el contrato de integración ofrecido por la empresa:</p>
+
+<table>
+<thead>
+<tr>
+  <th>Contrato de Integración No:</th>
+  <th>001</th>
+</tr>
+</thead>
+<tbody><tr>
+  <td>Tipo de Integración:</td>
+  <td>REST</td>
+</tr>
+<tr>
+  <td>Patrón de Intercambio:</td>
+  <td>Síncrono</td>
+</tr>
+<tr>
+  <td>Formato de Entrada</td>
+  <td>JSON</td>
+</tr>
+<tr>
+  <td>Formato de Respuesta:</td>
+  <td>JSON</td>
+</tr>
+<tr>
+  <td>Endpoint URI:</td>
+  <td><a href="http://192.168.0.100:8080/creditAgencyService/creditProfile">http://192.168.0.100:8080/creditAgencyService/creditProfile</a></td>
+</tr>
+<tr>
+  <td>Método de solicitud</td>
+  <td>POST</td>
+</tr>
+<tr>
+  <td>Parametros de entrada</td>
+  <td>{</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “Cliente” : {</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “tipoIdentificacion” : “[DATO]”,</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “numeroDeIdentificacion” : “[DATO]”,</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “nombres” : “[DATO]”,</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “apellidos” : “[DATO]”</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp;}</td>
+</tr>
+<tr>
+  <td></td>
+  <td>}</td>
+</tr>
+<tr>
+  <td>Parámetros de salida</td>
+  <td>{</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “CreditProfile” : {</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “CreditHistoryLegth” : “[DATO. AÑOS DE HISTORIA CREDITICIA DEL CLIENTE]”,</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp; “CreditScore” : “[DATO - PUNTAJE ASIGNADO AL CLIENTE - RANGO ENTRE 0 Y 600 PUNTOS]”</td>
+</tr>
+<tr>
+  <td></td>
+  <td>&nbsp;&nbsp;&nbsp;&nbsp;}</td>
+</tr>
+<tr>
+  <td></td>
+  <td>}</td>
+</tr>
+</tbody></table>
+
+
+<p>Cuando se tenga el perfil crediticio del cliente, se procede a consultar cuál de los bancos con los que se tiene convenio, es elegible para ofrecer.. Se tiene en cuenta las siguientes reglas:</p>
+
+<ol>
+<li><p>Banco de América y Broken Bank solo realizan préstamos, si el monto supera los $20’000.000. </p></li>
+<li><p>Latin Trump’s Bank y Banco Chibcha solo realizan préstamos, si el monto iguala o supera los <script type="math/tex" id="MathJax-Element-4">10.000.00 y NO iguala NI supera los </script>20.000.000</p></li>
+<li><p>Banco del pueblo solo realiza préstamos por menos de $10.000.000</p></li>
+</ol>
+
+<p>Una vez se tengan los posibles bancos que puedan prestar el dinero, se realiza una invocación a sus propios puntos de integración expuestos.  Cada banco, expone un punto de integración con protocolos y/o formatos distintos.  Sin embargo, cada banco recibe como entrada el perfil crediticio y la información básica del cliente.  [Es decisión de ustedes, la elección del tipo de tecnología con la que expondrán y consumirán cada uno de los servicios que ofrece cada uno de los bancos. Ejemplo: Banco de América y Broken Bank exponen sus servicio por medio de Rest Services, Latin Trump’s Bank por medio de Archivos XML en un servidor FTP y Banco del Pueblo, por medio de su sitio Web con una petición POST].</p>
+
+<p>La respuesta de cada banco, es la tasa de interés y el tipo de tasa al que presta el dinero.</p>
+
+<p>Se toma la tasa de interés más baja y se le envía una notificación al usuario vía correo electrónico, informando el banco que le puede servir para su préstamo.</p>
+
+<p>El flujo general del proceso es:</p>
+
+
+
+<div class="sequence-diagram"><svg height="811" version="1.1" width="1108.9296875" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.5px; top: 0.296875px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.1.2</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><marker id="raphael-marker-endblock55-obj413" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj416" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj419" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj422" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj425" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj428" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj431" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj434" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj437" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj440" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj443" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj446" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj449" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj452" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj455" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker><marker id="raphael-marker-endblock55-obj461" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></use></marker></defs><rect x="10" y="20" width="58.625" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20.28125" y="30" width="38.625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="39.3125" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">Client</tspan></text><rect x="10" y="752" width="58.625" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="20.28125" y="762" width="38.625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="39.3125" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">Client</tspan></text><path fill="none" stroke="#000000" d="M39.3125,59L39.3125,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="88.625" y="20" width="43.46875" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="98.609375" y="30" width="23.46875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="110.359375" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">GUI</tspan></text><rect x="88.625" y="752" width="43.46875" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="98.609375" y="762" width="23.46875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="110.359375" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">GUI</tspan></text><path fill="none" stroke="#000000" d="M110.359375,59L110.359375,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="182.390625" y="20" width="117.40625" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="192.40625" y="30" width="97.40625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="241.09375" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">IntegrationESB</tspan></text><rect x="182.390625" y="752" width="117.40625" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="192.40625" y="762" width="97.40625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="241.09375" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">IntegrationESB</tspan></text><path fill="none" stroke="#000000" d="M241.09375,59L241.09375,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="371.6484375" y="20" width="90.453125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="381.828125" y="30" width="70.453125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="416.875" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">RiskProfile</tspan></text><rect x="371.6484375" y="752" width="90.453125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="381.828125" y="762" width="70.453125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="416.875" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">RiskProfile</tspan></text><path fill="none" stroke="#000000" d="M416.875,59L416.875,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="482.1015625" y="20" width="112.921875" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="492.171875" y="30" width="92.921875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="538.5625" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BancoAmerica</tspan></text><rect x="482.1015625" y="752" width="112.921875" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="492.171875" y="762" width="92.921875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="538.5625" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BancoAmerica</tspan></text><path fill="none" stroke="#000000" d="M538.5625,59L538.5625,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="615.0234375" y="20" width="99.3125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="625.09375" y="30" width="79.3125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="664.6796875" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BrokenBank</tspan></text><rect x="615.0234375" y="752" width="99.3125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="625.09375" y="762" width="79.3125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="664.6796875" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BrokenBank</tspan></text><path fill="none" stroke="#000000" d="M664.6796875,59L664.6796875,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="734.3359375" y="20" width="86.3125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="744.40625" y="30" width="66.3125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="777.4921875" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">LatinBank</tspan></text><rect x="734.3359375" y="752" width="86.3125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="744.40625" y="762" width="66.3125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="777.4921875" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">LatinBank</tspan></text><path fill="none" stroke="#000000" d="M777.4921875,59L777.4921875,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="840.6484375" y="20" width="112.703125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="850.71875" y="30" width="92.703125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="897" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BancoChibcha</tspan></text><rect x="840.6484375" y="752" width="112.703125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="850.71875" y="762" width="92.703125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="897" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BancoChibcha</tspan></text><path fill="none" stroke="#000000" d="M897,59L897,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="973.3515625" y="20" width="105.578125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="983.34375" y="30" width="85.578125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="1026.140625" y="39.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BancoPueblo</tspan></text><rect x="973.3515625" y="752" width="105.578125" height="39" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="983.34375" y="762" width="85.578125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="1026.140625" y="771.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">BancoPueblo</tspan></text><path fill="none" stroke="#000000" d="M1026.140625,59L1026.140625,752" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="54.0625" y="74.5" width="42.046875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="74.8359375" y="84" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">access</tspan></text><path fill="none" stroke="#000000" d="M39.3125,98C39.3125,98,89.19171875715256,98,105.36349671357311,98" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj413)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="136.953125" y="113.5" width="77.53125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="175.7265625" y="123" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">request info</tspan></text><path fill="none" stroke="#000000" d="M110.359375,137C110.359375,137,212.13556652888656,137,236.08875223050927,137" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj416)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="120.34375" y="152.5" width="110.734375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="175.7265625" y="162" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">request accepted</tspan></text><path fill="none" stroke="#000000" d="M241.09375,176C241.09375,176,139.31755847111344,176,115.36437276949073,176" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj419)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="281.578125" y="191.5" width="95.1875" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="328.984375" y="201" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">request profile</tspan></text><path fill="none" stroke="#000000" d="M241.09375,215C241.09375,215,383.21404171176255,215,411.87404194465216,215" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj422)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="285.96875" y="230.5" width="86.390625" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="328.984375" y="240" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">return profile</tspan></text><path fill="none" stroke="#000000" d="M416.875,254C416.875,254,274.75470828823745,254,246.09470805534784,254" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj425)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="351.59375" y="269.5" width="76.828125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="389.828125" y="279" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">send profile</tspan></text><path fill="none" stroke="#000000" d="M241.09375,293C241.09375,293,494.5685606431216,293,533.5551648191877,293" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj428)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="313.09375" y="308.5" width="153.859375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="389.828125" y="318" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">return interest and type</tspan></text><path fill="none" stroke="#000000" d="M538.5625,332C538.5625,332,285.0876893568784,332,246.10108518081233,332" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj431)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="414.65625" y="347.5" width="76.828125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="452.88671875" y="357" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">send profile</tspan></text><path fill="none" stroke="#000000" d="M241.09375,371C241.09375,371,612.1267799440539,371,659.683503752801,371" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj434)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="376.140625" y="386.5" width="153.859375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="452.88671875" y="396" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">return interest and type</tspan></text><path fill="none" stroke="#000000" d="M664.6796875,410C664.6796875,410,293.64665755594615,410,246.089933747199,410" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj437)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="471.0625" y="425.5" width="76.828125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="509.29296875" y="435" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">send profile</tspan></text><path fill="none" stroke="#000000" d="M241.09375,449C241.09375,449,718.2021078332327,449,772.4825020593769,449" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj440)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="432.546875" y="464.5" width="153.859375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="509.29296875" y="474" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">return interest and type</tspan></text><path fill="none" stroke="#000000" d="M777.4921875,488C777.4921875,488,300.38382966676727,488,246.10343544062312,488" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj443)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="530.8125" y="503.5" width="76.828125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="569.046875" y="513" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">send profile</tspan></text><path fill="none" stroke="#000000" d="M241.09375,527C241.09375,527,831.4680801406503,527,892.004510477338,527" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj446)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="492.3125" y="542.5" width="153.859375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="569.046875" y="552" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">return interest and type</tspan></text><path fill="none" stroke="#000000" d="M897,566C897,566,306.6256698593497,566,246.08923952266196,566" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj449)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="595.390625" y="581.5" width="76.828125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="633.6171875" y="591" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">send profile</tspan></text><path fill="none" stroke="#000000" d="M241.09375,605C241.09375,605,954.3587787488359,605,1021.1403067090846,605" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj452)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="556.875" y="620.5" width="153.859375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="633.6171875" y="630" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">return interest and type</tspan></text><path fill="none" stroke="#000000" d="M1026.140625,644C1026.140625,644,312.8755962511641,644,246.09406829091543,644" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj455)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><rect x="261.09375" y="664" width="135.78125" height="29" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><rect x="266.28125" y="669" width="125.78125" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="328.984375" y="678.5" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">Process best choice</tspan></text><rect x="108.953125" y="708.5" width="62.484375" height="19" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></rect><text x="140.203125" y="718" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;"><tspan style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);" dy="5.5">send mail</tspan></text><path fill="none" stroke="#000000" d="M241.09375,732C241.09375,732,75.41765794483945,732,44.31294241983494,732" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj461)" stroke-dasharray="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path></svg></div>
+
+<p>Este proyecto es el correspondiente a la GUI</p>
